@@ -281,27 +281,62 @@
            
         </section>
 
-        <seection class="contact" id="Contact">
-            <h2 class="heading">Contact <span>Me</span></h2>
+       <section class="contact" id="Contact">
+    <h2 class="heading">Contact <span>Me</span></h2>
 
-            <form>
-                <div class="input-group">
-                    <div class="input-box">
-                        <input type="text" placeholder="Full Name"  value="" id="name" required>
-                        <input type="email" placeholder="E-mail" value="" id="email" required>
-                    </div>
-                    <div class="input-box">
-                        <input type="number" placeholder="Phone Number" value="" id="pnumber" required>
-                        <input type="text" placeholder="Subject" value="" id="subject" required>
-                    </div>
-                </div>
+    <form id="contactForm">
+        <div class="input-group">
+            <div class="input-box">
+                <input type="text" placeholder="Full Name" id="name" required>
+                <input type="email" placeholder="E-mail" id="email" required>
+            </div>
+            <div class="input-box">
+                <input type="number" placeholder="Phone Number" id="pnumber" required>
+                <input type="text" placeholder="Subject" id="subject" required>
+            </div>
+        </div>
 
-                <div class="input-group2">
-                   <textarea name="" id="message" cols="30" rows="10" placeholder="Your Message"></textarea>
-                   <input type="submit" value="Send Message" class="btn">
-                </div>
-            </form>
-        </seection>
+        <div class="input-group2">
+            <textarea id="message" cols="30" rows="10" placeholder="Your Message"></textarea>
+            <input type="submit" value="Send Message" class="btn">
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevents the form from refreshing the page
+
+            // Collect form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('pnumber').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            // Create an object to send
+            const contactData = {
+                name: name,
+                email: email,
+                phone: phone,
+                subject: subject,
+                message: message
+            };
+
+            // Send data to backend using fetch API
+            fetch('http://localhost:5000/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(contactData)
+            })
+            .then(response => response.json())
+            .then(data => alert('Message sent successfully!'))
+            .catch(error => alert('Error: ' + error));
+        });
+    </script>
+</section>
+
 
         <footer class="footer">
             <div class="social">
